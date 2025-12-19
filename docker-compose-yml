@@ -1,0 +1,13 @@
+services:
+  electric:
+    image: electricsql/electric:latest
+    environment:
+      # Tu Postgres local (user electric con REPLICATION)
+      DATABASE_URL: postgresql://electric:electric@host.docker.internal:5432/example_react_native
+    ports:
+      - "3001:3000"
+    volumes:
+      - electric_storage:/var/lib/electric
+
+volumes:
+  electric_storage:
