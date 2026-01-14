@@ -6,7 +6,7 @@ Esta carpeta contiene scripts para configurar y administrar la base de datos Pos
 
 - PostgreSQL 12 o superior instalado y corriendo
 - Usuario con permisos de superusuario en PostgreSQL (por defecto: `postgres`)
-- Permisos de ejecución en los scripts bash
+- Permisos para ejecutar comandos `chmod` en tu sistema
 
 ## Scripts Disponibles
 
@@ -22,11 +22,17 @@ Configura la base de datos desde cero, incluyendo:
 
 **Uso:**
 
-```bash
-cd scripts
-chmod +x setup-db.sh
-./setup-db.sh
-```
+1. Primero, dar permisos de ejecución al script:
+
+   ```bash
+   chmod +x scripts/setup-db.sh
+   ```
+
+2. Luego ejecutar el script:
+   ```bash
+   cd scripts
+   ./setup-db.sh
+   ```
 
 Si tu usuario de PostgreSQL no es `postgres`, especifícalo así:
 
@@ -67,43 +73,56 @@ Elimina completamente la base de datos y la vuelve a crear desde cero. **¡ADVER
 
 **Uso:**
 
-```bash
-chmod +x reset-db.sh
-./reset-db.sh
-```
+1. Dar permisos de ejecución (si no lo has hecho):
+
+   ```bash
+   chmod +x scripts/reset-db.sh
+   ```
+
+2. Ejecutar el script:
+   ```bash
+   cd scripts
+   ./reset-db.sh
+   ```
 
 ## Flujo de Trabajo Recomendado
 
 ### Configuración Inicial
 
-1. Ejecutar el script de setup:
+1. **Dar permisos de ejecución a los scripts bash:**
+
+   ```bash
+   chmod +x scripts/*.sh
+   ```
+
+2. **Ejecutar el script de setup:**
 
    ```bash
    cd scripts
-   chmod +x *.sh
    ./setup-db.sh
    ```
 
-2. (Opcional) Cargar datos de prueba:
+3. **(Opcional) Cargar datos de prueba:**
 
    ```bash
    psql -U postgres -f seed-db.sql
    ```
 
-3. Crear archivo `.env` en la raíz del proyecto:
+4. **Crear archivo `.env` en la raíz del proyecto:**
 
    ```env
    DATABASE_URL=postgresql://electric:electric@localhost:5432/example_react_native_db
    PORT=3000
    ```
 
-4. Iniciar Electric:
+5. **Iniciar Electric:**
 
    ```bash
+   cd ..
    docker-compose up -d
    ```
 
-5. Iniciar la API:
+6. **Iniciar la API:**
    ```bash
    npm run dev
    ```
@@ -113,7 +132,14 @@ chmod +x reset-db.sh
 Si necesitas resetear la base de datos durante el desarrollo:
 
 ```bash
+cd scripts
 ./reset-db.sh
+```
+
+**Nota:** Si es la primera vez que ejecutas este script, recuerda darle permisos primero:
+
+```bash
+chmod +x scripts/reset-db.sh
 ```
 
 ## Estructura de la Base de Datos
